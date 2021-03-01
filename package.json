@@ -8,7 +8,11 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "ali-oss": "^6.13.2",
+    "animejs": "^3.2.1",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "html2canvas": "^1.0.0-rc.7",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0"
   },
