@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     share() {
-      getAvatar(this.userId).then()
+      getAvatar(this.userId).then();
       let url =
         location.host + location.pathname + "?userId=" + getParams("userId");
       if (getParams("env")) url += `&env=${getParams("env")}`;
@@ -90,16 +90,20 @@ export default {
       });
     },
     async shareImg() {
-      getAvatar(this.userId).then()
+      getAvatar(this.userId).then();
       this.mask = true;
-      const canvas = await html2canvas(document.getElementById("shareImage"), {
+      // 图片的分辨率为750*4159，
+      // 750 / element.offsetWidth为图片的放大比例
+      // canvas的y轴偏移量也应按比例相乘
+      const element = document.getElementById("shareImage");
+      const scaleY = 750 / element.offsetWidth;
+      const canvas = await html2canvas(element, {
         useCORS: true,
         width: 750,
         height: 4159,
         windowWidth: 750,
         windowHeight: 4159,
-        x: 0,
-        y: 4159 / 2 + 750 + 133 / 2,
+        y: element.offsetTop * scaleY,
         scale: 1,
       });
       canvas.toBlob(
@@ -220,8 +224,8 @@ $width: 750;
   }
 
   #shareImage {
-    position: fixed;
-    top: format-vw(2896);
+    position: relative;
+    // top: format-vw(2896);
     width: 100vw;
     height: format-vw(4159);
     background-image: url("~@/assets/shareImage.jpg");
